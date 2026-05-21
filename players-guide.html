@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プレイヤーズガイド | 第5回 UPT大学対抗戦</title>
+  <meta name="description" content="第5回 UPT大学対抗戦 プレイヤーズガイド。トーナメント概要・ルール・スケジュール・ポイント制度・注意事項を掲載。">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+
+    :root {
+      --gold: #c9a84c;
+      --gold-dim: rgba(201,168,76,0.15);
+      --gold-border: rgba(201,168,76,0.3);
+      --bg: #07070d;
+      --bg-card: #0d0d16;
+      --bg-card2: #111118;
+      --text: #e8e0d0;
+      --text-muted: #6a5f50;
+      --text-sub: #9a8a78;
+      --border: rgba(255,255,255,0.06);
+      --red: #c0392b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── TOP NAV ── */
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+      background: rgba(7,7,13,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .nav-back {
+      font-size: 12px; color: var(--text-muted); text-decoration: none;
+      letter-spacing: 2px; display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-title { font-size: 12px; color: var(--text-muted); letter-spacing: 2px; }
+    .nav-entry {
+      background: var(--gold); color: #07070d;
+      font-size: 11px; font-weight: 500; letter-spacing: 2px;
+      padding: 8px 20px; border-radius: 3px; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-entry:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 40px 60px;
+      border-bottom: 0.5px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 10px; letter-spacing: 5px; color: var(--gold);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    .hero-eyebrow::before { content: '♠'; }
+    .hero-eyebrow::after { content: ''; flex: none; width: 40px; height: 0.5px; background: var(--gold-border); }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 8vw, 96px);
+      letter-spacing: 6px; line-height: 0.95;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 15px; color: var(--text-sub);
+      letter-spacing: 2px; margin-bottom: 32px;
+    }
+    .hero-meta {
+      display: flex; gap: 32px; flex-wrap: wrap;
+    }
+    .hero-meta-item { font-size: 13px; color: var(--text-muted); }
+    .hero-meta-item span { color: var(--text-sub); margin-right: 8px; }
+
+    /* ── SIDE NAV (TOC) ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .toc {
+      position: sticky; top: 53px;
+      height: calc(100vh - 53px);
+      overflow-y: auto;
+      padding: 40px 24px;
+      border-right: 0.5px solid var(--border);
+      background: var(--bg-card);
+    }
+    .toc-label {
+      font-size: 9px; letter-spacing: 4px; color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .toc-list { list-style: none; }
+    .toc-list li { margin-bottom: 4px; }
+    .toc-list a {
+      font-size: 12px; color: var(--text-muted); text-decoration: none;
+      letter-spacing: 1px; padding: 6px 8px; display: block; border-radius: 3px;
+      transition: all 0.2s; line-height: 1.4;
+    }
+    .toc-list a:hover { color: var(--gold); background: var(--gold-dim); }
+    .toc-list .toc-sub a { font-size: 11px; padding-left: 16px; }
+
+    /* ── CONTENT ── */
+    .content { padding: 60px 56px; }
+
+    /* ── SECTION ── */
+    .guide-section { margin-bottom: 72px; }
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 32px; padding-bottom: 16px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .section-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px; color: var(--gold-border);
+      line-height: 1; min-width: 48px;
+    }
+    .section-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px; font-weight: 400; color: var(--text);
+      letter-spacing: 2px;
+    }
+    .section-title-en {
+      font-size: 10px; letter-spacing: 3px; color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── INFO CARD ── */
+    .info-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+      margin-bottom: 24px;
+    }
+    .info-card {
+      background: var(--bg-card2); border: 0.5px solid var(--border);
+      border-radius: 6px; padding: 20px 24px;
+    }
+    .info-card-label {
+      font-size: 9px; letter-spacing: 3px; color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .info-card-value {
+      font-size: 15px; color: var(--text); font-weight: 400;
+      line-height: 1.5;
+    }
+    .info-card-value .gold { color: var(--gold); }
+
+    /* ── EVENT CARDS ── */
+    .event-cards { display: flex; flex-direction: column; gap: 12px; }
+    .event-card {
+      background: var(--bg-card2); border: 0.5px solid var(--border);
+      border-radius: 6px; overflow: hidden;
+    }
+    .event-card-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 24px; border-bottom: 0.5px solid var(--border);
+    }
+    .event-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; color: var(--gold); min-width: 40px;
+    }
+    .event-name { font-size: 16px; color: var(--text); font-weight: 500; }
+    .event-name-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; }
+    .event-body {
+      padding: 20px 24px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .event-detail-label { font-size: 9px; letter-spacing: 3px; color: var(--text-muted); margin-bottom: 4px; }
+    .event-detail-value { font-size: 13px; color: var(--text-sub); }
+    .event-detail-value .highlight { color: var(--gold); font-size: 15px; }
+    .event-note {
+      padding: 12px 24px; background: var(--gold-dim);
+      font-size: 12px; color: var(--gold); letter-spacing: 1px;
+    }
+
+    /* ── POINT TABLE ── */
+    .point-tables { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .point-table {
+      background: var(--bg-card2); border: 0.5px solid var(--border); border-radius: 6px; overflow: hidden;
+    }
+    .point-table-head {
+      padding: 12px 16px; background: rgba(201,168,76,0.08);
+      font-size: 10px; letter-spacing: 3px; color: var(--gold);
+      border-bottom: 0.5px solid var(--gold-border);
+    }
+    .point-table table { width: 100%; border-collapse: collapse; }
+    .point-table td {
+      padding: 8px 16px; font-size: 12px; color: var(--text-muted);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .point-table tr:last-child td { border-bottom: none; }
+    .point-table td:last-child { text-align: right; color: var(--gold); font-weight: 500; }
+    .point-table .rank-1 td { color: var(--text); }
+
+    /* ── STRUCTURE TABLE ── */
+    .structure-wrap { overflow-x: auto; }
+    .structure-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 12px;
+    }
+    .structure-table th {
+      padding: 10px 14px; text-align: center;
+      font-size: 9px; letter-spacing: 3px; color: var(--text-muted); font-weight: 400;
+      border-bottom: 0.5px solid var(--gold-border);
+      background: rgba(201,168,76,0.05);
+    }
+    .structure-table td {
+      padding: 8px 14px; text-align: center; color: var(--text-muted);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .structure-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .structure-table .break-row td {
+      background: rgba(201,168,76,0.05); color: var(--gold);
+      font-size: 11px; letter-spacing: 2px;
+    }
+    .structure-table .level-num { color: var(--text-sub); font-weight: 500; }
+
+    /* ── RULE LIST ── */
+    .rule-list { list-style: none; }
+    .rule-list li {
+      padding: 14px 0; border-bottom: 0.5px solid var(--border);
+      font-size: 13px; color: var(--text-sub); line-height: 1.8;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .rule-list li:last-child { border-bottom: none; }
+    .rule-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px; color: var(--gold-border);
+      min-width: 28px; line-height: 1.4;
+    }
+    .rule-list li strong { color: var(--text); font-weight: 500; }
+
+    /* ── ALERT BOX ── */
+    .alert {
+      background: rgba(192,57,43,0.08); border: 0.5px solid rgba(192,57,43,0.3);
+      border-radius: 6px; padding: 16px 20px; margin: 16px 0;
+      font-size: 13px; color: #e07060; line-height: 1.8;
+    }
+    .alert-title { font-weight: 500; margin-bottom: 4px; letter-spacing: 1px; }
+
+    /* ── TIP BOX ── */
+    .tip {
+      background: var(--gold-dim); border: 0.5px solid var(--gold-border);
+      border-radius: 6px; padding: 16px 20px; margin: 16px 0;
+      font-size: 13px; color: var(--text-sub); line-height: 1.8;
+    }
+    .tip-title { color: var(--gold); font-weight: 500; margin-bottom: 4px; letter-spacing: 1px; }
+
+    /* ── SCHEDULE ── */
+    .schedule { display: flex; flex-direction: column; gap: 0; }
+    .schedule-item {
+      display: flex; gap: 24px; align-items: flex-start;
+      padding: 16px 0; border-bottom: 0.5px solid var(--border);
+    }
+    .schedule-item:last-child { border-bottom: none; }
+    .schedule-time {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; color: var(--gold); min-width: 80px; line-height: 1.2;
+    }
+    .schedule-desc { font-size: 13px; color: var(--text-sub); line-height: 1.7; }
+    .schedule-desc strong { color: var(--text); }
+
+    /* ── TAG ── */
+    .tag {
+      display: inline-block; font-size: 9px; letter-spacing: 2px;
+      color: var(--gold); border: 0.5px solid var(--gold-border);
+      padding: 3px 10px; border-radius: 3px; margin-right: 6px; margin-top: 4px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider { height: 0.5px; background: var(--border); margin: 32px 0; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--bg-card2); border: 0.5px solid var(--border);
+      border-radius: 6px; padding: 28px 32px; text-align: center;
+      margin-top: 16px;
+    }
+    .contact-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold); color: #07070d; padding: 12px 28px;
+      border-radius: 4px; text-decoration: none; font-size: 13px;
+      font-weight: 500; letter-spacing: 1px; transition: opacity 0.2s;
+    }
+    .contact-link:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    .guide-footer {
+      padding: 32px 56px; border-top: 0.5px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-card); flex-wrap: wrap; gap: 12px;
+    }
+    .guide-footer p { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { display: none; }
+      .content { padding: 32px 24px; }
+      .hero { padding: 48px 24px 40px; }
+      .top-nav { padding: 12px 20px; }
+      .nav-title { display: none; }
+      .info-grid { grid-template-columns: 1fr; }
+      .event-body { grid-template-columns: repeat(2, 1fr); }
+      .point-tables { grid-template-columns: 1fr; }
+      .guide-footer { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a href="index.html" class="nav-back">← UPT 公式サイトへ</a>
+    <span class="nav-title">PLAYERS GUIDE — 5TH TOURNAMENT</span>
+    <a href="https://qr.paps.jp/wNolV" target="_blank" class="nav-entry">エントリー</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">OFFICIAL PLAYERS GUIDE</div>
+    <h1>UPT <span>5TH</span><br>PLAYERS<br>GUIDE</h1>
+    <p class="hero-sub">第5回 UPT大学対抗戦 — プレイヤーズガイド</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span>開催日</span>2025年8月8日（土）</div>
+      <div class="hero-meta-item"><span>会場</span>BEYOND 山口周南 POKER ROOM</div>
+      <div class="hero-meta-item"><span>参加資格</span>大学生・大学院生</div>
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- TOC -->
+    <nav class="toc">
+      <div class="toc-label">CONTENTS</div>
+      <ul class="toc-list">
+        <li><a href="#overview">01 大会概要</a></li>
+        <li><a href="#events">02 トーナメント種目</a></li>
+        <li><a href="#schedule">03 当日スケジュール</a></li>
+        <li><a href="#points">04 大学対抗ポイント</a></li>
+        <li><a href="#pd">05 プレイングディーラー</a></li>
+        <li><a href="#structure">06 ブラインド構成</a></li>
+        <li><a href="#rules">07 ゲームルール</a></li>
+        <li><a href="#conduct">08 行動規範</a></li>
+        <li><a href="#entry">09 エントリー方法</a></li>
+        <li><a href="#contact">10 お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- 01 概要 -->
+      <section class="guide-section" id="overview">
+        <div class="section-header">
+          <div class="section-num">01</div>
+          <div>
+            <div class="section-title">大会概要</div>
+            <div class="section-title-en">TOURNAMENT OVERVIEW</div>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-card-label">名称</div>
+            <div class="info-card-value">第5回 UPT大学対抗戦<br><span style="font-size:12px; color:var(--text-muted);">University Poker Tour</span></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">開催日時</div>
+            <div class="info-card-value">2025年8月8日（土）<br><span class="gold">10:00 スタート</span></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">会場</div>
+            <div class="info-card-value">BEYOND 山口周南 POKER ROOM<br><span style="font-size:12px; color:var(--text-muted);">山口県周南市新町2丁目17 水井ビル3F</span></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">参加資格</div>
+            <div class="info-card-value">大学生・大学院生（学生証確認あり）<br><span style="font-size:12px; color:var(--text-muted);">個人単位での参加</span></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">ゲーム形式</div>
+            <div class="info-card-value">テキサスホールデム<br><span style="font-size:12px; color:var(--text-muted);">フリーズアウト / リエントリー形式</span></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">主催</div>
+            <div class="info-card-value">UPT運営事務局<br><span style="font-size:12px; color:var(--text-muted);">@UPTst_official</span></div>
+          </div>
+        </div>
+
+        <div class="tip">
+          <div class="tip-title">▶ 大会の目的</div>
+          ポーカーは学生の間で競技的・文化的に広まりつつある一方で、大学対抗という明確な枠組みで行われる大会はまだ多くありません。第5回大会では、大学同士のチーム戦を導入し、学生が切磋琢磨しながら競技を通じて交流を深める場を提供します。全世界で開催されているポーカー大会のようにポーカーテーブルやストラクチャー画面を用意し、本格的な大会雰囲気を体感できます。
+        </div>
+      </section>
+
+      <!-- 02 種目 -->
+      <section class="guide-section" id="events">
+        <div class="section-header">
+          <div class="section-num">02</div>
+          <div>
+            <div class="section-title">トーナメント種目</div>
+            <div class="section-title-en">TOURNAMENT EVENTS</div>
+          </div>
+        </div>
+
+        <div class="event-cards">
+
+          <div class="event-card">
+            <div class="event-card-header">
+              <div class="event-num">#1</div>
+              <div>
+                <div class="event-name">大学対抗 3v3 HU</div>
+                <div class="event-name-sub">UNIVERSITY TEAM HEADS-UP</div>
+              </div>
+              <div style="margin-left:auto;">
+                <span class="tag">チーム戦</span>
+                <span class="tag">ITMポイント</span>
+              </div>
+            </div>
+            <div class="event-body">
+              <div>
+                <div class="event-detail-label">開始時刻</div>
+                <div class="event-detail-value">10:00〜</div>
+              </div>
+              <div>
+                <div class="event-detail-label">スタートスタック</div>
+                <div class="event-detail-value"><span class="highlight">40,000</span></div>
+              </div>
+              <div>
+                <div class="event-detail-label">形式</div>
+                <div class="event-detail-value">各大学3名チーム対抗戦</div>
+              </div>
+            </div>
+            <div class="event-note">各大学3名によるチーム対抗ヘッズアップ。4大学出場の場合は準決勝・決勝の計2戦。勝利ポイント＋最終順位ポイントによるITMポイント付与。</div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-card-header">
+              <div class="event-num">#2</div>
+              <div>
+                <div class="event-name">Main Event</div>
+                <div class="event-name-sub">MAIN EVENT — FREEZEOUT / RE-ENTRY</div>
+              </div>
+              <div style="margin-left:auto;">
+                <span class="tag">¥3,000</span>
+                <span class="tag">ITMポイント</span>
+              </div>
+            </div>
+            <div class="event-body">
+              <div>
+                <div class="event-detail-label">開始時刻</div>
+                <div class="event-detail-value">10:00〜</div>
+              </div>
+              <div>
+                <div class="event-detail-label">エントリー費</div>
+                <div class="event-detail-value"><span class="highlight">¥3,000</span>／回</div>
+              </div>
+              <div>
+                <div class="event-detail-label">スタートスタック</div>
+                <div class="event-detail-value"><span class="highlight">40,000</span></div>
+              </div>
+            </div>
+            <div class="event-note">PDはファーストエントリー無料。リエントリー可（レジストレーションクローズまで）。</div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-card-header">
+              <div class="event-num">#3</div>
+              <div>
+                <div class="event-name">Side Event（Second Chance）</div>
+                <div class="event-name-sub">SIDE EVENT — FREEZEOUT / RE-ENTRY</div>
+              </div>
+              <div style="margin-left:auto;">
+                <span class="tag">¥2,000</span>
+                <span class="tag">ITMポイント</span>
+              </div>
+            </div>
+            <div class="event-body">
+              <div>
+                <div class="event-detail-label">開始時刻</div>
+                <div class="event-detail-value">14:00〜</div>
+              </div>
+              <div>
+                <div class="event-detail-label">エントリー費</div>
+                <div class="event-detail-value"><span class="highlight">¥2,000</span>／回</div>
+              </div>
+              <div>
+                <div class="event-detail-label">スタートスタック</div>
+                <div class="event-detail-value"><span class="highlight">30,000</span></div>
+              </div>
+            </div>
+            <div class="event-note">午後スタートのセカンドチャンスイベント。Main Eventのバストアウト後に参加可能。</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 03 スケジュール -->
+      <section class="guide-section" id="schedule">
+        <div class="section-header">
+          <div class="section-num">03</div>
+          <div>
+            <div class="section-title">当日スケジュール（予定）</div>
+            <div class="section-title-en">SCHEDULE</div>
+          </div>
+        </div>
+
+        <div class="schedule">
+          <div class="schedule-item">
+            <div class="schedule-time">9:30</div>
+            <div class="schedule-desc"><strong>受付開始</strong><br>学生証をご持参ください。エントリー費の支払いは受付時にお願いします。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">10:00</div>
+            <div class="schedule-desc"><strong>#1 大学対抗 3v3 HU スタート</strong><br>チーム対抗ヘッズアップ開始。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">10:00</div>
+            <div class="schedule-desc"><strong>#2 Main Event スタート</strong><br>レジストレーション・リエントリー受付開始。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">昼頃</div>
+            <div class="schedule-desc"><strong>レジストレーションクローズ / ランチブレイク</strong><br>Main Eventのリエントリー終了。45分休憩。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">14:00</div>
+            <div class="schedule-desc"><strong>#3 Side Event スタート</strong><br>セカンドチャンスイベント開始。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">夜頃</div>
+            <div class="schedule-desc"><strong>Main Event ファイナルテーブル</strong><br>FT配信あり。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">終了後</div>
+            <div class="schedule-desc"><strong>表彰式・大学対抗ポイント集計発表</strong><br>トロフィー授与。総合ポイントランキング発表。</div>
+          </div>
+        </div>
+
+        <div class="alert" style="margin-top:20px;">
+          <div class="alert-title">⚠ 注意</div>
+          スケジュールは進行状況により変動する場合があります。最新情報は公式X（@UPTst_official）をご確認ください。
+        </div>
+      </section>
+
+      <!-- 04 ポイント -->
+      <section class="guide-section" id="points">
+        <div class="section-header">
+          <div class="section-num">04</div>
+          <div>
+            <div class="section-title">大学対抗ポイント制度</div>
+            <div class="section-title-en">UNIVERSITY POINT SYSTEM</div>
+          </div>
+        </div>
+
+        <p style="font-size:13px; color:var(--text-sub); margin-bottom:24px; line-height:1.9;">
+          各トーナメントの個人成績に応じてITMポイントが付与されます。各大学の参加プレイヤーのポイントを合計した<strong style="color:var(--text);">大学別総合ポイントランキング</strong>でも順位を競います。
+        </p>
+
+        <div class="point-tables">
+          <div class="point-table">
+            <div class="point-table-head">MAIN EVENT</div>
+            <table>
+              <tr class="rank-1"><td>🥇 1位</td><td>40 pt</td></tr>
+              <tr><td>🥈 2位</td><td>22 pt</td></tr>
+              <tr><td>🥉 3位</td><td>14 pt</td></tr>
+              <tr><td>4位</td><td>9 pt</td></tr>
+              <tr><td>5位</td><td>7 pt</td></tr>
+              <tr><td>6位</td><td>5 pt</td></tr>
+              <tr><td>7位</td><td>4 pt</td></tr>
+              <tr><td>8〜9位</td><td>3 pt</td></tr>
+              <tr><td>10〜12位</td><td>2 pt</td></tr>
+              <tr><td>13〜15位</td><td>1 pt</td></tr>
+            </table>
+          </div>
+          <div class="point-table">
+            <div class="point-table-head">SIDE EVENT</div>
+            <table>
+              <tr class="rank-1"><td>🥇 1位</td><td>25 pt</td></tr>
+              <tr><td>🥈 2位</td><td>14 pt</td></tr>
+              <tr><td>🥉 3位</td><td>9 pt</td></tr>
+              <tr><td>4位</td><td>6 pt</td></tr>
+              <tr><td>5位</td><td>4 pt</td></tr>
+              <tr><td>6〜7位</td><td>3 pt</td></tr>
+              <tr><td>8〜9位</td><td>2 pt</td></tr>
+              <tr><td>10位</td><td>1 pt</td></tr>
+            </table>
+          </div>
+          <div class="point-table">
+            <div class="point-table-head">大学対抗 HU</div>
+            <table>
+              <tr class="rank-1"><td>決勝 1位</td><td>+10 pt</td></tr>
+              <tr><td>決勝 2位</td><td>+6 pt</td></tr>
+              <tr><td>3位</td><td>+3 pt</td></tr>
+              <tr><td>各勝利</td><td>+3 pt</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 PD -->
+      <section class="guide-section" id="pd">
+        <div class="section-header">
+          <div class="section-num">05</div>
+          <div>
+            <div class="section-title">プレイングディーラー（PD）</div>
+            <div class="section-title-en">PLAYING DEALER</div>
+          </div>
+        </div>
+
+        <p style="font-size:13px; color:var(--text-sub); margin-bottom:20px; line-height:1.9;">
+          一部プレイヤーがプレイしながらディーラーを担当する<strong style="color:var(--text);">「プレイングディーラー制」</strong>を採用します。
+        </p>
+
+        <ul class="rule-list">
+          <li>
+            <span class="rule-num">①</span>
+            <span><strong>Main Eventのファーストエントリー無料</strong>（¥3,000相当）の特典が付与されます。</span>
+          </li>
+          <li>
+            <span class="rule-num">②</span>
+            <span>PDは事前に運営より選出します。希望者も受け付けます。</span>
+          </li>
+          <li>
+            <span class="rule-num">③</span>
+            <span>公平性とスムーズな進行の観点から、テーブル間の移動など、柔軟に対応していただきます。</span>
+          </li>
+          <li>
+            <span class="rule-num">④</span>
+            <span>PD希望の方は事前にX（@UPTst_official）へご連絡ください。</span>
+          </li>
+        </ul>
+
+        <div class="tip">
+          <div class="tip-title">▶ PDとは</div>
+          プレイングディーラーとは、自身もプレイヤーとして参加しながらディーリング（カードを配る）を担う役割です。XPT・JOPTなど主要大会でも採用されている制度で、大会のスムーズな運営に貢献します。
+        </div>
+      </section>
+
+      <!-- 06 ブラインド構成 -->
+      <section class="guide-section" id="structure">
+        <div class="section-header">
+          <div class="section-num">06</div>
+          <div>
+            <div class="section-title">ブラインド構成</div>
+            <div class="section-title-en">BLIND STRUCTURE</div>
+          </div>
+        </div>
+
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px; letter-spacing:1px;">▶ Main Event — Start Stack: 40,000</p>
+        <div class="structure-wrap" style="margin-bottom:40px;">
+          <table class="structure-table">
+            <thead>
+              <tr><th>LEVEL</th><th>SB</th><th>BB</th><th>ANTE</th><th>TIME</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="level-num">1</td><td>100</td><td>200</td><td>200</td><td>15 min</td></tr>
+              <tr><td class="level-num">2</td><td>200</td><td>300</td><td>300</td><td>15 min</td></tr>
+              <tr><td class="level-num">3</td><td>200</td><td>400</td><td>400</td><td>15 min</td></tr>
+              <tr><td class="level-num">4</td><td>300</td><td>500</td><td>500</td><td>15 min</td></tr>
+              <tr><td class="level-num">5</td><td>300</td><td>600</td><td>600</td><td>15 min</td></tr>
+              <tr><td class="level-num">6</td><td>400</td><td>800</td><td>800</td><td>15 min</td></tr>
+              <tr><td class="level-num">7</td><td>500</td><td>1,000</td><td>1,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">8</td><td>600</td><td>1,200</td><td>1,200</td><td>15 min</td></tr>
+              <tr><td class="level-num">9</td><td>1,000</td><td>1,500</td><td>1,500</td><td>15 min</td></tr>
+              <tr class="break-row"><td colspan="5">— REG CLOSE &amp; LUNCH BREAK（45 min）—</td></tr>
+              <tr><td class="level-num">10</td><td>1,000</td><td>2,000</td><td>2,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">11</td><td>1,500</td><td>3,000</td><td>3,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">12</td><td>2,000</td><td>4,000</td><td>4,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">13</td><td>2,500</td><td>5,000</td><td>5,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">14</td><td>3,000</td><td>6,000</td><td>6,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">15</td><td>4,000</td><td>8,000</td><td>8,000</td><td>20 min</td></tr>
+              <tr class="break-row"><td colspan="5">— BREAK（10 min）—</td></tr>
+              <tr><td class="level-num">16</td><td>5,000</td><td>10,000</td><td>10,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">17</td><td>6,000</td><td>12,000</td><td>12,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">18</td><td>10,000</td><td>15,000</td><td>15,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">19</td><td>10,000</td><td>20,000</td><td>20,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">20</td><td>15,000</td><td>30,000</td><td>30,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">21</td><td>20,000</td><td>40,000</td><td>40,000</td><td>20 min</td></tr>
+              <tr class="break-row"><td colspan="5">— BREAK（10 min）—</td></tr>
+              <tr><td class="level-num">22</td><td>25,000</td><td>50,000</td><td>50,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">23</td><td>30,000</td><td>60,000</td><td>60,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">24</td><td>40,000</td><td>80,000</td><td>80,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">25</td><td>50,000</td><td>100,000</td><td>100,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">26</td><td>60,000</td><td>120,000</td><td>120,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">27</td><td>100,000</td><td>150,000</td><td>150,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">28</td><td>100,000</td><td>200,000</td><td>200,000</td><td>20 min</td></tr>
+              <tr><td class="level-num">29</td><td>150,000</td><td>300,000</td><td>300,000</td><td>20 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px; letter-spacing:1px;">▶ Side Event（Second Chance）— Start Stack: 30,000</p>
+        <div class="structure-wrap" style="margin-bottom:40px;">
+          <table class="structure-table">
+            <thead>
+              <tr><th>LEVEL</th><th>SB</th><th>BB</th><th>ANTE</th><th>TIME</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="level-num">1</td><td>100</td><td>200</td><td>200</td><td>15 min</td></tr>
+              <tr><td class="level-num">2</td><td>200</td><td>300</td><td>300</td><td>15 min</td></tr>
+              <tr><td class="level-num">3</td><td>200</td><td>400</td><td>400</td><td>15 min</td></tr>
+              <tr><td class="level-num">4</td><td>300</td><td>600</td><td>600</td><td>15 min</td></tr>
+              <tr><td class="level-num">5</td><td>400</td><td>800</td><td>800</td><td>15 min</td></tr>
+              <tr><td class="level-num">6</td><td>500</td><td>1,000</td><td>1,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">7</td><td>600</td><td>1,200</td><td>1,200</td><td>15 min</td></tr>
+              <tr><td class="level-num">8</td><td>1,000</td><td>1,500</td><td>1,500</td><td>15 min</td></tr>
+              <tr class="break-row"><td colspan="5">— REG CLOSE（10 min）—</td></tr>
+              <tr><td class="level-num">9</td><td>1,000</td><td>2,000</td><td>2,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">10</td><td>1,500</td><td>3,000</td><td>3,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">11</td><td>2,000</td><td>4,000</td><td>4,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">12</td><td>2,500</td><td>5,000</td><td>5,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">13</td><td>3,000</td><td>6,000</td><td>6,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">14</td><td>4,000</td><td>8,000</td><td>8,000</td><td>15 min</td></tr>
+              <tr class="break-row"><td colspan="5">— BREAK（10 min）—</td></tr>
+              <tr><td class="level-num">15</td><td>5,000</td><td>10,000</td><td>10,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">16</td><td>10,000</td><td>15,000</td><td>15,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">17</td><td>10,000</td><td>20,000</td><td>20,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">18</td><td>15,000</td><td>30,000</td><td>30,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">19</td><td>20,000</td><td>40,000</td><td>40,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">20</td><td>25,000</td><td>50,000</td><td>50,000</td><td>15 min</td></tr>
+              <tr class="break-row"><td colspan="5">— BREAK（10 min）—</td></tr>
+              <tr><td class="level-num">21</td><td>30,000</td><td>60,000</td><td>60,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">22</td><td>40,000</td><td>80,000</td><td>80,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">23</td><td>50,000</td><td>100,000</td><td>100,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">24</td><td>100,000</td><td>150,000</td><td>150,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">25</td><td>100,000</td><td>200,000</td><td>200,000</td><td>15 min</td></tr>
+              <tr><td class="level-num">26</td><td>150,000</td><td>300,000</td><td>300,000</td><td>15 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px; letter-spacing:1px;">▶ 大学対抗 HU — Start Stack: 40,000</p>
+        <div class="structure-wrap">
+          <table class="structure-table">
+            <thead>
+              <tr><th>LEVEL</th><th>SB</th><th>BB</th><th>ANTE</th><th>TIME</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="level-num">1</td><td>500</td><td>1,000</td><td>1,000</td><td>5 min</td></tr>
+              <tr><td class="level-num">2</td><td>1,000</td><td>1,500</td><td>1,500</td><td>5 min</td></tr>
+              <tr><td class="level-num">3</td><td>1,000</td><td>2,000</td><td>2,000</td><td>5 min</td></tr>
+              <tr><td class="level-num">4</td><td>1,500</td><td>3,000</td><td>3,000</td><td>5 min</td></tr>
+              <tr><td class="level-num">5</td><td>2,000</td><td>4,000</td><td>4,000</td><td>5 min</td></tr>
+              <tr><td class="level-num">6</td><td>3,000</td><td>5,000</td><td>5,000</td><td>5 min</td></tr>
+              <tr><td class="level-num">7</td><td>4,000</td><td>8,000</td><td>8,000</td><td>5 min</td></tr>
+              <tr><td class="level-num">8</td><td>5,000</td><td>10,000</td><td>10,000</td><td>5 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 07 ルール -->
+      <section class="guide-section" id="rules">
+        <div class="section-header">
+          <div class="section-num">07</div>
+          <div>
+            <div class="section-title">ゲームルール</div>
+            <div class="section-title-en">GAME RULES</div>
+          </div>
+        </div>
+
+        <ul class="rule-list">
+          <li><span class="rule-num">①</span><span><strong>ゲーム形式</strong>：テキサスホールデム（ノーリミット）。TDA（Tournament Directors Association）ルールに準拠して進行します。</span></li>
+          <li><span class="rule-num">②</span><span><strong>言語</strong>：テーブルでの会話は日本語または英語に限ります。ベット・レイズ等のアクションは明確に口頭で宣言してください。</span></li>
+          <li><span class="rule-num">③</span><span><strong>スマートフォン</strong>：自分のハンドがプレイ中のスマートフォン使用は禁止です。ハンドアウェイ時は使用可能です。</span></li>
+          <li><span class="rule-num">④</span><span><strong>チップ管理</strong>：チップは常にテーブル上に可視化してください。チップのスプラッシュ（ポットに投げ入れる行為）は禁止です。</span></li>
+          <li><span class="rule-num">⑤</span><span><strong>アングルシューティング</strong>：故意にルールの抜け穴を利用する行為は失格対象となります。フェアプレーを心がけてください。</span></li>
+          <li><span class="rule-num">⑥</span><span><strong>コリュージョン</strong>：他プレイヤーとのチップ移転や不正な協力行為は即失格となります。</span></li>
+          <li><span class="rule-num">⑦</span><span><strong>ルーリング</strong>：判断が必要な場合はディーラーまたはフロアを呼んでください。フロアの判断が最終決定となります。</span></li>
+          <li><span class="rule-num">⑧</span><span><strong>リエントリー</strong>：レジストレーションクローズ前であれば、バストアウト後にリエントリー可能です（Main Event・Side Event）。</span></li>
+        </ul>
+
+        <div class="alert">
+          <div class="alert-title">⚠ 重要</div>
+          本大会は賭博行為を一切含まない、スキル競技として運営しています。金銭の授受を目的とした行為は禁止です。
+        </div>
+      </section>
+
+      <!-- 08 行動規範 -->
+      <section class="guide-section" id="conduct">
+        <div class="section-header">
+          <div class="section-num">08</div>
+          <div>
+            <div class="section-title">行動規範</div>
+            <div class="section-title-en">CODE OF CONDUCT</div>
+          </div>
+        </div>
+
+        <ul class="rule-list">
+          <li><span class="rule-num">①</span><span><strong>他プレイヤーへの敬意</strong>：暴言・侮辱・ハラスメント行為は即失格となります。すべてのプレイヤーに敬意を持って接してください。</span></li>
+          <li><span class="rule-num">②</span><span><strong>大会会場のルール遵守</strong>：BEYOND 山口周南 POKER ROOMの施設ルールに従ってください。</span></li>
+          <li><span class="rule-num">③</span><span><strong>SNS・配信</strong>：ファイナルテーブルはYouTubeにて配信されます。会場内での撮影・SNS投稿は他プレイヤーのカードが映らないよう配慮してください。</span></li>
+          <li><span class="rule-num">④</span><span><strong>整理整頓</strong>：会場内は清潔に使用し、ゴミは指定の場所へ捨ててください。</span></li>
+          <li><span class="rule-num">⑤</span><span><strong>遅刻</strong>：開始時刻に遅刻した場合、ブラインドはスタックから差し引かれます。</span></li>
+        </ul>
+      </section>
+
+      <!-- 09 エントリー -->
+      <section class="guide-section" id="entry">
+        <div class="section-header">
+          <div class="section-num">09</div>
+          <div>
+            <div class="section-title">エントリー方法</div>
+            <div class="section-title-en">HOW TO ENTER</div>
+          </div>
+        </div>
+
+        <div class="schedule">
+          <div class="schedule-item">
+            <div class="schedule-time" style="font-size:28px; min-width:40px;">STEP<br>1</div>
+            <div class="schedule-desc"><strong>エントリーフォームに記入</strong><br>下記ボタンよりエントリーフォームにアクセスし、必要事項（氏名・大学名・参加イベント）を入力してください。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time" style="font-size:28px; min-width:40px;">STEP<br>2</div>
+            <div class="schedule-desc"><strong>運営より確認連絡</strong><br>エントリー後、公式X（@UPTst_official）より詳細をご連絡します。</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time" style="font-size:28px; min-width:40px;">STEP<br>3</div>
+            <div class="schedule-desc"><strong>当日受付</strong><br>学生証をご持参の上、9:30より受付をお済ませください。エントリー費は当日現金にてお支払いください。</div>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:32px;">
+          <a href="https://qr.paps.jp/wNolV" target="_blank" class="contact-link">エントリーフォームへ →</a>
+        </div>
+      </section>
+
+      <!-- 10 問い合わせ -->
+      <section class="guide-section" id="contact">
+        <div class="section-header">
+          <div class="section-num">10</div>
+          <div>
+            <div class="section-title">お問い合わせ</div>
+            <div class="section-title-en">CONTACT</div>
+          </div>
+        </div>
+
+        <div class="contact-box">
+          <p>大会に関するご質問・ご不明点は公式Xアカウントまでお気軽にDMください。</p>
+          <a href="https://x.com/UPTst_official" target="_blank" class="contact-link">X: @UPTst_official へ連絡</a>
+        </div>
+      </section>
+
+    </div><!-- /content -->
+  </div><!-- /layout -->
+
+  <!-- FOOTER -->
+  <footer class="guide-footer">
+    <div>
+      <p>第5回 UPT大学対抗戦 プレイヤーズガイド</p>
+      <p style="margin-top:4px;">© 2025 UPT運営事務局 / University Poker Tour</p>
+    </div>
+    <a href="index.html" style="font-size:12px; color:var(--text-muted); text-decoration:none; letter-spacing:2px;">← 公式サイトトップへ</a>
+  </footer>
+
+</body>
+</html>
